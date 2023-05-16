@@ -2,10 +2,12 @@ package com.nexola.workshopmongo.services;
 
 import com.nexola.workshopmongo.domain.User;
 import com.nexola.workshopmongo.repositories.UserRepository;
+import com.nexola.workshopmongo.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service // Indica ao spring que é um service
 public class UserService {
@@ -15,5 +17,10 @@ public class UserService {
 
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    public User findById(String id) {
+        Optional<User> obj = userRepository.findById(id);
+        return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
     }
 }

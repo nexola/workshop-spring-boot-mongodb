@@ -6,6 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository // Indica ao spring que é um repositório
 public interface UserRepository extends MongoRepository<User, String> { // MongoRepository<Objeto, Tipo do ID>
-
-
 }
