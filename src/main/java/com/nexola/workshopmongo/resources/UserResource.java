@@ -1,6 +1,7 @@
 package com.nexola.workshopmongo.resources;
 
 import com.nexola.workshopmongo.domain.User;
+import com.nexola.workshopmongo.dto.UserDTO;
 import com.nexola.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,9 @@ public class UserResource {
     private UserService userService;
 
     @GetMapping // Método GET, para retornar os valores
-    public ResponseEntity<List<User>> findAll() { // Buscar todos os usuários
+    public ResponseEntity<List<UserDTO>> findAll() { // Buscar todos os usuários
         List<User> list = userService.findAll();
-        return ResponseEntity.ok().body(list);
+        List<UserDTO> listDto = list.stream().map(UserDTO::new).toList(); // Transforma os usuarios da lista em usersDTO
+        return ResponseEntity.ok().body(listDto);
     }
 }
