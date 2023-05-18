@@ -3,6 +3,7 @@ package com.nexola.workshopmongo.resources;
 import com.nexola.workshopmongo.domain.User;
 import com.nexola.workshopmongo.dto.UserDTO;
 import com.nexola.workshopmongo.services.UserService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +43,14 @@ public class UserResource {
     @DeleteMapping(value = "/{id}") // Método DELETE, para excluir valores
     public ResponseEntity<Void> delete(@PathVariable String id)  { // Buscar todos os usuários
         userService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Void> update(@RequestBody UserDTO objDto, @PathVariable String id) {
+        User obj = userService.fromDTO(objDto);
+        obj.setId(id);
+        obj = userService.update(obj);
         return ResponseEntity.noContent().build();
     }
 }
