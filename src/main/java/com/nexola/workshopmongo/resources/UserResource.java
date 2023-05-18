@@ -1,5 +1,6 @@
 package com.nexola.workshopmongo.resources;
 
+import com.nexola.workshopmongo.domain.Post;
 import com.nexola.workshopmongo.domain.User;
 import com.nexola.workshopmongo.dto.UserDTO;
 import com.nexola.workshopmongo.services.UserService;
@@ -51,5 +52,11 @@ public class UserResource {
         obj.setId(id);
         obj = userService.update(obj);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/{id}/posts") // Método GET, para retornar valores
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id)  { // Buscar todos os usuários
+        User obj = userService.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 }
