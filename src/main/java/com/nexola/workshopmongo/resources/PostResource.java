@@ -13,7 +13,6 @@ public class PostResource {
     @Autowired
     private PostService postService;
 
-
     @GetMapping(value = "/{id}") // Método GET, para retornar valores
     public ResponseEntity<Post> findById(@PathVariable String id)  { // Buscar todos os usuários
         Post obj = postService.findById(id);
