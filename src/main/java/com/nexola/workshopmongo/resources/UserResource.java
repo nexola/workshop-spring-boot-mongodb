@@ -25,17 +25,23 @@ public class UserResource {
         return ResponseEntity.ok().body(listDto);
     }
 
-    @GetMapping(value = "/{id}") // Método GET, para retornar os valores
+    @GetMapping(value = "/{id}") // Método GET, para retornar valores
     public ResponseEntity<UserDTO> findById(@PathVariable String id)  { // Buscar todos os usuários
         User obj = userService.findById(id);
         return ResponseEntity.ok().body(new UserDTO(obj));
     }
 
-    @PostMapping // Método GET, para retornar os valores
+    @PostMapping // Método POST, para inserir valores
     public ResponseEntity<Void> insert(@RequestBody UserDTO objDto)  { // Buscar todos os usuários
         User obj = userService.fromDTO(objDto);
         obj = userService.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @DeleteMapping(value = "/{id}") // Método DELETE, para excluir valores
+    public ResponseEntity<Void> delete(@PathVariable String id)  { // Buscar todos os usuários
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
